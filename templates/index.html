@@ -1,0 +1,33 @@
+ {% extends "base.html" %} <!-- kế thừa từ base.html -->
+{% block content %}
+
+<!-- là trang chủ của wed -->
+<h2>Danh sách tài liệu</h2>
+
+
+
+{% if current_user %} <!-- nếu đã đăng nhập thì cho upload tài liệu luôn -->
+    <p>Xin chào, {{ current_user.username }}!</p>
+    <a href="{{ url_for('upload') }}"><button>Upload tài liệu mới</button></a>
+{% else %}   <!-- nếu chưa thì phải đăng nhập hoặc đăng ký -->
+    <p>Bạn cần <a href="{{ url_for('login') }}">đăng nhập</a> để upload tài liệu.</p>
+{% endif %}
+
+<form method="get">
+    <input type="text" name="q" placeholder="Tìm kiếm...">
+    <button type="submit">Search</button>
+</form>
+<ul>
+    {% for doc in docs %}
+    <li>
+        <strong>{{ doc.title }}</strong> - {{ doc.description }}
+        <a href="{{ doc.file_url }}">Tải về</a> <!-- link để tải tài liệu -->
+        {% if current_user and current_user.id == doc.user_id %}
+        <!-- # nếu người dùng hiện tại đag đăng nhập và là người upload tài liệu thì mới cho xóa -->
+             |
+            <a href="{{ url_for('delete', id=doc.id) }}">Xóa</a>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

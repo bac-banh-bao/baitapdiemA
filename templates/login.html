@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+# trang đăng nhập của wed
+<h2>Đăng nhập</h2>
+{% if error %} <!-- nếu có lỗi thì hiển thị lỗi (vd: sai username hoặc password) -->
+    <p class="error">{{ error }}</p>
+{% endif %} <!-- nếu ko sai thì hiện thị bình thường -->
+<form method="post"> <!-- gửi dữ liệu bằng phương thức POST -->
+    <input type="text" name="username" placeholder="Tên đăng nhập" required><br>
+    <input type="password" name="password" placeholder="Mật khẩu" required><br>
+    <button type="submit">Login</button> <!-- nút để gửi form -->
+</form>
+<p>Chưa có tài khoản? <a href="{{ url_for('register') }}">Đăng ký ngay</a></p>
+<!-- nếu chưa có tài khoản thì chuyển sang trang đăg kí -->
+{% endblock %}
