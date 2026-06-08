@@ -1,0 +1,22 @@
+<!DOCTYPE html>  <!-- là form cố định, để các form khác kế thừa -->
+<html>
+<head>
+    <title>StudyShare</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>StudyShare - Chia sẻ tài liệu học tập</h1>
+    </header>
+    <nav>
+        <a href="{{ url_for('index') }}">Trang chủ</a>
+        <a href="{{ url_for('upload') }}">Upload</a>
+        <a href="{{ url_for('login') }}">Đăng nhập</a>
+        <a href="{{ url_for('register') }}">Đăng ký</a>
+        <a href="{{ url_for('logout') }}">Đăng xuất</a>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

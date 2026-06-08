@@ -1,0 +1,54 @@
+{% extends "base.html" %}  # kế thừa từ base.html
+{% block content %}
+
+
+# trang của admin
+<h2>Trang quản trị</h2>
+
+<h3>Danh sách người dùng</h3>
+<table border="1" cellpadding="5" cellspacing="0"># bảng hiển thị danh sách người dùng
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Role</th>
+        <th>Hành động</th>
+    </tr>
+    {% for u in users %} #dùng for để hiển thị các người dùng
+    <tr>
+        <td>{{ u.id }}</td>
+        <td>{{ u.username }}</td>
+        <td>{{ u.role }}</td>
+        <td>
+            {% if u.role != "admin" or u.id != current_user.id%} 
+                <a href="{{ url_for('delete_user', id=u.id) }}">Xóa</a> |
+                <a href="{{ url_for('reset_password', id=u.id) }}">Reset mật khẩu</a>
+            {% else %}
+                (Admin)
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h3>Danh sách tài liệu</h3>
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th>ID</th>
+        <th>Tiêu đề</th>
+        <th>Mô tả</th>
+        <th>File</th>
+        <th>User ID</th>
+        <th>Hành động</th>
+    </tr>
+    {% for d in docs %}
+    <tr>
+        <td>{{ d.id }}</td>
+        <td>{{ d.title }}</td>
+        <td>{{ d.description }}</td>
+        <td><a href="{{ d.file_url }}">Tải về</a></td>
+        <td>{{ d.user_id }}</td>
+        <td><a href="{{ url_for('delete', id=d.id) }}">Xóa</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
